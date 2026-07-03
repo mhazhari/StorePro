@@ -1,160 +1,395 @@
-# StorePro - نظام إدارة المتاجر
+# 🏪 StorePro - نظام إدارة المتجر الذكي
 
-## 📋 الوصف
+![Status](https://img.shields.io/badge/Status-Active-brightgreen)
+![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Language](https://img.shields.io/badge/Language-C%23-purple)
 
-تطبيق ASP.NET Core 10 شامل لإدارة المتاجر والمخازن مع:
-- ✅ إدارة المنتجات والأصناف
-- ✅ إدارة الفواتير والمبيعات
-- ✅ تتبع المخزون
-- ✅ إدارة العمليات النقدية
-- ✅ التقارير والإحصائيات
+## 📌 نظرة عامة
 
-## 🏗️ هيكل المشروع
-
-```
-StorePro/
-├── StorePro.Api/              # Web API
-├── StorePro.Models/           # Entity Models و DTOs
-├── StorePro.Data/             # Database Context و Repositories
-├── StorePro.Core/             # Business Services و Mapping
-└── StorePro.sln               # Solution File
-```
-
-## 🔧 المتطلبات
-
-- .NET 10.0 SDK
-- SQL Server 2019+
-- Visual Studio 2022 (اختياري)
-
-## 📦 الحزم المستخدمة
-
-- Microsoft.EntityFrameworkCore 10.0.0
-- Microsoft.EntityFrameworkCore.SqlServer 10.0.0
-- AutoMapper 13.0.1
-- Swashbuckle.AspNetCore 6.4.6
-
-## ⚙️ الإعداد والتشغيل
-
-### 1. تحديث سلسلة الاتصال
-
-قم بتحديث `appsettings.json`:
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_SERVER;Database=StoreDB;User Id=YOUR_USER;Password=YOUR_PASSWORD;Encrypt=false;TrustServerCertificate=true;"
-  }
-}
-```
-
-### 2. تنفيذ الترحيلات
-
-```bash
-dotnet ef database update --project StorePro.Data --startup-project StorePro.Api
-```
-
-### 3. تشغيل التطبيق
-
-```bash
-dotnet run --project StorePro.Api
-```
-
-سيكون التطبيق متاحاً على: `https://localhost:5001`
-
-## 📚 API Documentation
-
-التوثيق الكامل متاح على:
-`https://localhost:5001/swagger`
-
-## 🗄️ جداول قاعدة البيانات
-
-### 1. جداول الأصناف والمنتجات
-- `Tbl_ITm` - المنتجات
-- `Tbl_ITm_OnUnit` - وحدات المنتجات
-
-### 2. جداول الفواتير والمبيعات
-- `Order_Main` - الفواتير الرئيسية
-- `Order_Products` - تفاصيل الفواتير
-
-### 3. جداول الحسابات والعمليات النقدية
-- `ChartAcc_Main` - دليل الحسابات
-- `Voucher_Main` - الإيصالات والعمليات النقدية
-
-## 🔌 API Endpoints
-
-### المنتجات
-- `GET /api/products` - جميع المنتجات
-- `GET /api/products/{id}` - منتج محدد
-- `GET /api/products/barcode/{barcode}` - البحث برمز
-- `GET /api/products/search/{term}` - البحث
-- `GET /api/products/low-stock` - المخزون الناقص
-- `POST /api/products` - إنشاء منتج
-- `PUT /api/products/{id}` - تحديث منتج
-- `DELETE /api/products/{id}` - حذف منتج
-
-### الفواتير
-- `GET /api/orders` - جميع الفواتير
-- `GET /api/orders/{id}` - فاتورة محددة
-- `GET /api/orders/date-range` - الفواتير في نطاق تاريخي
-- `POST /api/orders` - إنشاء فاتورة
-- `PUT /api/orders/{id}` - تحديث فاتورة
-- `DELETE /api/orders/{id}` - إلغاء فاتورة
-- `GET /api/orders/{id}/print` - الفاتورة للطباعة
-
-### العمليات النقدية
-- `GET /api/cashtransactions` - جميع الإيصالات
-- `GET /api/cashtransactions/{id}` - إيصال محدد
-- `GET /api/cashtransactions/date-range` - في نطاق تاريخي
-- `GET /api/cashtransactions/daily-balance` - الرصيد اليومي
-- `POST /api/cashtransactions` - إنشاء إيصال
-
-## 📝 أمثلة الاستخدام
-
-### إنشاء منتج
-```bash
-curl -X POST https://localhost:5001/api/products \
-  -H "Content-Type: application/json" \
-  -d '{
-    "itm_Name": "منتج جديد",
-    "privateCode": "SKU123",
-    "categoryName": "فئة",
-    "storMsgMin": 10
-  }'
-```
-
-### إنشاء فاتورة
-```bash
-curl -X POST https://localhost:5001/api/orders \
-  -H "Content-Type: application/json" \
-  -d '{
-    "orderType": 1,
-    "storeGUID": "guid-value",
-    "paymentMethod": "نقد",
-    "orderDetails": []
-  }'
-```
-
-## 🔐 الأمان
-
-- استخدم HTTPS في الإنتاج
-- حماية كلمات المرور في `appsettings.json`
-- استخدم متغيرات البيئة للبيانات الحساسة
-
-## 🤝 المساهمة
-
-المشروع مفتوح للتطوير والتحسين. يرجى:
-1. إنشاء فرع جديد
-2. إجراء التغييرات
-3. فتح Pull Request
-
-## 📄 الترخيص
-
-هذا المشروع مرخص تحت MIT License
-
-## 📧 التواصل
-
-للأسئلة والاستفسارات: mo7elsayed@example.com
+**StorePro** هو نظام متكامل لإدارة المتاجر مبني على:
+- **Backend**: ASP.NET Core 8.0 REST API
+- **Frontend**: ASP.NET Core 8.0 MVC
+- **Database**: SQL Server
+- **Authentication**: JWT Tokens
+- **Architecture**: Layered Architecture
 
 ---
 
-**آخر تحديث:** 2026-07-03
+## 🎯 الميزات الرئيسية
+
+### 📦 إدارة المنتجات
+- ✅ إضافة وتعديل وحذف المنتجات
+- ✅ إدارة وحدات القياس المختلفة
+- ✅ تتبع المخزون والأسعار
+- ✅ تصنيفات المنتجات
+
+### 📋 إدارة الفواتير
+- ✅ إنشاء فواتير بيع جديدة
+- ✅ إدارة تفاصيل البنود
+- ✅ حساب الأرباح والخسائر
+- ✅ تتبع الخصومات والرسوم
+
+### 💰 إدارة النقدية والحسابات
+- ✅ جدول الحسابات المحاسبي
+- ✅ الإيصالات النقدية
+- ✅ تتبع رصيد الحسابات
+- ✅ التقارير المالية
+
+### 🔐 المصادقة والتفويض
+- ✅ نظام تسجيل الدخول آمن
+- ✅ JWT Tokens
+- ✅ صلاحيات المستخدمين (Admin, User)
+- ✅ جلسات آمنة
+
+### 🎨 واجهة المستخدم
+- ✅ تصميم عصري وحديث (Bootstrap 5)
+- ✅ دعم اللغة العربية (RTL)
+- ✅ استجابة كاملة على جميع الأجهزة
+- ✅ رسائل توضيحية وأخطاء واضحة
+
+---
+
+## 🏗️ البنية المعمارية
+
+```
+StorePro/
+│
+├── StorePro.Api/           # REST API Layer
+│   ├── Controllers/
+│   ├── Program.cs
+│   └── appsettings.json
+│
+├── StorePro.Web/           # Presentation Layer (MVC)
+│   ├── Controllers/
+│   ├── Views/
+│   ├── Services/
+│   ├── Models/
+│   └── Program.cs
+│
+├── StorePro.Core/          # Business Logic Layer
+│   ├── Services/
+│   └── Mapping/
+│
+├── StorePro.Data/          # Data Access Layer
+│   ├── ApplicationDbContext.cs
+│   └── Repositories/
+│
+└── StorePro.Models/        # Models & DTOs
+    ├── Entities/
+    └── DTOs/
+```
+
+---
+
+## 🚀 البدء السريع
+
+### المتطلبات
+- **.NET 8.0 SDK** أو أعلى
+- **Visual Studio 2022** (Community أو أعلى)
+- **SQL Server** (LocalDB أو Enterprise)
+- **Git**
+
+### التثبيت والتشغيل
+
+#### 1️⃣ استنساخ المستودع
+```bash
+git clone https://github.com/mhazhari/StorePro.git
+cd StorePro
+```
+
+#### 2️⃣ فتح في Visual Studio
+```bash
+start StorePro.sln
+```
+
+#### 3️⃣ استعادة الحزم
+```bash
+dotnet restore
+```
+
+#### 4️⃣ إنشاء قاعدة البيانات
+```bash
+# في Package Manager Console
+Update-Database
+```
+
+#### 5️⃣ تشغيل API
+```bash
+dotnet run --project StorePro.Api
+# API: https://localhost:5001
+```
+
+#### 6️⃣ تشغيل Web (في terminal جديد)
+```bash
+dotnet run --project StorePro.Web
+# Web: https://localhost:5002
+```
+
+#### 7️⃣ الوصول للتطبيق
+```
+https://localhost:5002
+```
+
+---
+
+## 📚 الأدلة التفصيلية
+
+### 🔧 دليل الإعداد الكامل
+📖 **[SETUP_GUIDE.md](./SETUP_GUIDE.md)**
+- خطوات التثبيت والإعداد
+- حل المشاكل الشائعة
+- إعدادات قاعدة البيانات
+
+### 🌐 تعديلات API المطلوبة
+📖 **[API_MODIFICATIONS.md](./API_MODIFICATIONS.md)**
+- تفعيل CORS
+- إعدادات الأمان
+- الخطوات البسيطة المطلوبة
+
+### 🔐 دليل JWT Authentication
+📖 **[JWT_AUTHENTICATION.md](./JWT_AUTHENTICATION.md)**
+- إضافة نظام المصادقة
+- إنشاء جدول المستخدمين
+- تطبيق JWT Tokens
+- حماية الـ APIs
+
+### 📖 دليل Web Project
+📖 **[StorePro.Web/README.md](./StorePro.Web/README.md)**
+- بنية المشروع
+- الخدمات المتاحة
+- طريقة الاستخدام
+
+---
+
+## 🔄 تدفق البيانات
+
+```
+المستخدم
+   ↓
+Web Controller
+   ↓
+Service Layer
+   ↓
+ApiClient (HttpClient)
+   ↓
+API Controller
+   ↓
+Service Layer
+   ↓
+Repository Pattern
+   ↓
+Entity Framework
+   ↓
+SQL Server Database
+   ↓
+JSON Response ← HTML Response
+   ↓
+المتصفح
+```
+
+---
+
+## 🛠️ التكنولوجيات المستخدمة
+
+### Backend
+| التقنية | الإصدار | الغرض |
+|---------|--------|-------|
+| ASP.NET Core | 8.0 | Framework |
+| Entity Framework Core | 8.0 | ORM |
+| JWT Tokens | 7.0 | المصادقة |
+| AutoMapper | 12.0 | تحويل البيانات |
+| Serilog | 8.0 | Logging |
+
+### Frontend
+| التقنية | الإصدار | الغرض |
+|---------|--------|-------|
+| ASP.NET Core MVC | 8.0 | Framework |
+| Bootstrap | 5.3 | CSS Framework |
+| Razor Views | 8.0 | Template Engine |
+
+### Database
+| التقنية | الإصدار | الغرض |
+|---------|--------|-------|
+| SQL Server | 2019+ | Database |
+| Entity Framework | 8.0 | Migration |
+
+---
+
+## 📊 هيكل قاعدة البيانات
+
+### الجداول الرئيسية
+
+#### 🛒 المنتجات والمخزون
+- `Tbl_ITm` - المنتجات
+- `Tbl_ITm_OnUnit` - وحدات المنتجات
+- `ChartAcc_Main` - دليل الحسابات
+
+#### 📋 المبيعات
+- `Order_Main` - الفواتير الرئيسية
+- `Order_Products` - تفاصيل بنود الفواتير
+
+#### 💰 النقدية
+- `Voucher_Main` - الإيصالات النقدية
+
+#### 👥 المستخدمين
+- `Users` - بيانات المستخدمين (JWT Authentication)
+
+---
+
+## 🔐 الأمان
+
+### المصادقة
+- ✅ JWT Tokens
+- ✅ كلمات مرور مشفرة (BCrypt)
+- ✅ جلسات آمنة
+
+### التفويض
+- ✅ Role-based Authorization
+- ✅ Protected Endpoints
+- ✅ CORS Configuration
+
+### الحماية
+- ✅ HTTPS/TLS
+- ✅ CSRF Protection
+- ✅ SQL Injection Prevention
+- ✅ XSS Protection
+
+---
+
+## 📖 أمثلة الاستخدام
+
+### الدخول
+```bash
+curl -X POST https://localhost:5001/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "password123"
+  }'
+```
+
+### الحصول على المنتجات
+```bash
+curl https://localhost:5001/api/products \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### إضافة منتج
+```bash
+curl -X POST https://localhost:5001/api/products \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -d '{
+    "itmName": "منتج جديد",
+    "price": 100,
+    "quantity": 50
+  }'
+```
+
+---
+
+## 🧪 الاختبار
+
+### Swagger UI
+```
+https://localhost:5001/swagger
+```
+
+### اختبار الويب
+```
+https://localhost:5002
+```
+
+---
+
+## 📝 الترخيص
+
+هذا المشروع مرخص تحت **MIT License**
+
+---
+
+## 👨‍💻 المساهمة
+
+نرحب بالمساهمات! يرجى:
+
+1. عمل Fork للمستودع
+2. إنشاء فرع جديد (`git checkout -b feature/amazing-feature`)
+3. عمل Commit للتغييرات (`git commit -m 'Add amazing feature'`)
+4. Push إلى الفرع (`git push origin feature/amazing-feature`)
+5. فتح Pull Request
+
+---
+
+## 🐛 الإبلاغ عن المشاكل
+
+وجدت مشكلة؟ أنشئ [Issue جديد](https://github.com/mhazhari/StorePro/issues)
+
+---
+
+## 📞 الدعم والمساعدة
+
+### المجتمع
+- 💬 [GitHub Discussions](https://github.com/mhazhari/StorePro/discussions)
+- 🐛 [GitHub Issues](https://github.com/mhazhari/StorePro/issues)
+
+### الموارد
+- 📚 [Microsoft Docs](https://learn.microsoft.com/en-us/aspnet/core/)
+- 🔗 [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
+- 🔐 [JWT Documentation](https://jwt.io/)
+
+---
+
+## 🗺️ خارطة الطريق
+
+### النسخة 1.1 (قادمة)
+- [ ] تقارير متقدمة
+- [ ] نظام الإشعارات
+- [ ] Multi-tenant Support
+
+### النسخة 1.2
+- [ ] تطبيق موبايل (Flutter/React Native)
+- [ ] نظام الدفع المتكامل
+- [ ] Real-time Notifications
+
+---
+
+## 📈 الإحصائيات
+
+![GitHub Stars](https://img.shields.io/github/stars/mhazhari/StorePro?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/mhazhari/StorePro?style=social)
+![GitHub Issues](https://img.shields.io/github/issues/mhazhari/StorePro)
+
+---
+
+## 👏 شكر وتقدير
+
+شكر خاص للمساهمين والمستخدمين الذين يدعمون هذا المشروع!
+
+---
+
+## 📧 التواصل
+
+**المطور**: Mohamed Azhari  
+**البريد الإلكتروني**: [your-email@example.com](mailto:your-email@example.com)  
+**GitHub**: [@mhazhari](https://github.com/mhazhari)
+
+---
+
+## 📄 آخر تحديث
+
+**تاريخ**: 2026-07-03  
+**الإصدار**: 1.0.0  
+**الحالة**: ✅ جاهز للاستخدام
+
+---
+
+<div align="center">
+
+### صُنع بـ ❤️ من أجلك
+
+**StorePro** - نظام إدارة المتاجر الذكي
+
+⭐ إذا أعجبك المشروع، لا تنسى النجمة!
+
+</div>

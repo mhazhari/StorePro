@@ -1,0 +1,63 @@
+@model StorePro.Web.Models.OrderApiDto
+
+@{
+    ViewData["Title"] = $"تفاصيل الفاتورة - {Model.OrderNumber}";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>📋 تفاصيل الفاتورة</h1>
+
+        <div class="card mt-4">
+            <div class="card-header bg-dark text-white">
+                <h5>رقم الفاتورة: @Model.OrderNumber</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-2">التاريخ:</dt>
+                    <dd class="col-sm-4">@Model.OrderDate.ToString("yyyy-MM-dd")</dd>
+
+                    <dt class="col-sm-2">المبلغ الإجمالي:</dt>
+                    <dd class="col-sm-4">
+                        <span class="badge bg-success fs-6">@Model.TotalAmount.ToString("C")</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header bg-secondary text-white">
+                <h5>البنود</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>المنتج</th>
+                            <th>الكمية</th>
+                            <th>السعر الواحد</th>
+                            <th>الإجمالي</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.ProductName</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.UnitPrice.ToString("C")</td>
+                                <td><strong>@item.Total.ToString("C")</strong></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a asp-action="Index" class="btn btn-secondary btn-lg">
+                ⬅️ العودة
+            </a>
+        </div>
+    </div>
+</div>

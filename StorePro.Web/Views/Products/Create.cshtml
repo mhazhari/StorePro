@@ -1,0 +1,64 @@
+@model StorePro.Web.Models.CreateProductApiDto
+
+@{
+    ViewData["Title"] = "إضافة منتج جديد";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1>➕ إضافة منتج جديد</h1>
+
+        <form asp-action="Create" method="post" class="mt-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="ItmName" class="form-label">
+                    <strong>اسم المنتج</strong>
+                </label>
+                <input asp-for="ItmName" class="form-control form-control-lg" 
+                       placeholder="أدخل اسم المنتج" required />
+                <span asp-validation-for="ItmName" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label">
+                            <strong>السعر</strong>
+                        </label>
+                        <input asp-for="Price" type="number" step="0.01" 
+                               class="form-control form-control-lg" 
+                               placeholder="0.00" required />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Quantity" class="form-label">
+                            <strong>الكمية</strong>
+                        </label>
+                        <input asp-for="Quantity" type="number" 
+                               class="form-control form-control-lg" 
+                               placeholder="0" required />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a asp-action="Index" class="btn btn-secondary btn-lg">
+                    ❌ إلغاء
+                </a>
+                <button type="submit" class="btn btn-success btn-lg">
+                    ✅ حفظ المنتج
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
